@@ -10,6 +10,6 @@
 
 - Cats
 - are
-- adorable!
+- **adorable!**
 
 A meme that captures how I currently feel about my university studies is ![](https://c.tenor.com/5MVQBZRnJwUAAAAd/tenor.gif)
