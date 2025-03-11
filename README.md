@@ -5,7 +5,7 @@
 <h2>A little about me:</h2>
 
 1. I am undertaking a degree in the Bachelor of Science.
-2. I am taking STATS 220 because it's a useful course for my STATS major.
+2. I am taking *STATS 220* because it's a useful course for my *STATS* major.
 3. I am interested in learning about everything this course has to offer!
 
 - Cats
