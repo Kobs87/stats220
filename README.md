@@ -2,7 +2,7 @@
 
 <h1>This is my repo for STATS 220.</h1> 
 
-A little about me:
+<h2>A little about me:</h2>
 
 - I am undertaking a degree in the Bachelor of Science.
 - I am taking STATS 220 because it's a useful course for my STATS major.
