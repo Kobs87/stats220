@@ -1,0 +1,53 @@
+---
+title: My dynamic report
+output: html_fragment
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+
+```
+
+```{css}
+
+```
+
+## Analysing some key features of these songs
+
+For this project, I decided to listen to four radio stations (Flava, Channel X, ZM, The Hits) and note each song that played on a station. I switched between each of the stations in the aforementioned order about every six minutes and noted each song that was playing at the time. A while after that, I then put in each of the 40 songs I noted through a Google form, noting their title, artist/s, release date, genre, radio station, peak chart position, and no of streams on Spotify.
+
+As part of analysing the data that I collected, I decided to find out which song had the most streams on Spotify, the songs with the shortest title, the oldest song in my playlist, looking at how popular each of the genres are, and looking at each song's Spotify streams, grouped by radio station it was heard on. 
+
+```{r}
+
+latest_data$spotify_streams[1 : 40]
+max(latest_data$spotify_streams)
+
+shortest_song_title = latest_data$song_title %>% nchar() %>% min()
+shortest_song <- nchar(latest_data$song_title) == shortest_song_title
+
+latest_data$song_title[shortest_song]
+latest_data$release_date[1 : 40]
+new_release_date = dmy(latest_data$release_date)
+min(new_release_date)
+
+ggplot(data = latest_data) +
+  geom_bar(aes(y = genre),
+           fill = "#a7d3a5") +
+  labs(title = "Popularity of Genre",
+       x = "no of songs",
+       y = "genre")
+
+latest_data %>%
+  ggplot() +
+    geom_bar(aes(x = spotify_streams, fill = radio_station))
+    labs(title = "Number of Streams by Radio Station",
+         caption = "Source: Spotify",
+         x = "song",
+         y = "no of streams")
+
+```
+
+The best pet to have is a `r best_pet` of course!
+
+![](https://c.tenor.com/-qBsG1HwR4oAAAAC/tenor.gif)
