@@ -1,67 +1,27 @@
----
-title: My dynamic report
-output: html_fragment
----
+#loading those three special packages
+library(magick)
+library(tidyverse)
+library(lubridate)
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
+#creating an object that holds the data I collected in my Google Sheet
+csv_file = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRoFDtuwgf9qe8prM37JTIYOia3rPBGxo5TXZ3UPcXLw8kS939ugXozMVbUc8CWOy2PcH7Ha1pc0uAU/pub?output=csv"
 
-```
+#using read_csv to put the data into a data frame
+logged_data = read_csv(csv_file)
 
-```{css}
+#renaming all the variables in my data frame to something more appropriate
+latest_data = logged_data %>%
+  rename(timestamp = 1,
+         song_title = 2,
+         artist_name = 3,
+         release_date = 4,
+         genre = 5,
+         radio_station = 6,
+         peak_position = 7,
+         spotify_streams = 8)
 
-@import url('https://fonts.googleapis.com/css2?family=Gidole&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap');
-
-body {
-  color: #ffffff;
-  background-image:         url("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fillustrations%2Fcharts-background&psig=AOvVaw1sV6-nd2MkGgQEpIhqZpSz&ust=1743665521921000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJjapbzquIwDFQAAAAAdAAAAABAE");
-  padding-bottom: 25px;
-}
-
-h1 {
-  color: #ffffff;
-  border-style: dashed;
-  font-family: 'Gidole';
-}
-
-h2 {
-  color: #ffffff;
-  font-family: 'Gidole';
-}
-
-h3 {
-  color: #ffffff;
-  font-family: 'Gidole';
-}
-
-h4 {
-  color: #ffffff;
-  font-family: 'Gidole';
-}
-  
-p {
-  color: #ffffff;
-  background-color: #d52f13;;
-  border-style: dashed;
-  padding: 20px 5px 20px 5px;
-  font-family: 'Gidole';
-} 
-
-a {
-  color: #ffffff;
-  font-family: 'Gidole';
-}
-
-```
-
-## Analysing some key features of these songs
-
-For this project, I decided to listen to four radio stations (Flava, Channel X, ZM, The Hits) and note each song that played on a station. I switched between each of the stations in the aforementioned order about every six minutes and noted each song that was playing at the time. A while after that, I then put in each of the 40 songs I noted through a Google form, noting their title, artist/s, release date, genre, radio station, peak chart position, and no of streams on Spotify.
-
-As part of analysing the data that I collected, I decided to find out which song had the most streams on Spotify, the songs with the shortest title, the oldest song in my playlist, looking at how popular each of the genres are, and looking at the Spotify streams for each song, grouped by radio station it was heard on.
-
-```{r}
+#getting r to show a preview of my data frame
+glimpse(latest_data)
 
 #analysing what the most streamed song in my playlist is
 latest_data$spotify_streams[1 : 40]
@@ -107,4 +67,5 @@ latest_data %>%
     guides(fill=guide_legend(title="Radio Station")) +
     theme(axis.text.x = element_blank())
 
-```
+#i have decided to use all of the code relating to analysing parts of my data
+#from the most streamed song analysis to the most streamed songs bar plot
