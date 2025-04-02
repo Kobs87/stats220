@@ -10,44 +10,101 @@ knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
 
 ```{css}
 
+@import url('https://fonts.googleapis.com/css2?family=Gidole&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap');
+
+body {
+  color: #ffffff;
+  background-image:         url("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fillustrations%2Fcharts-background&psig=AOvVaw1sV6-nd2MkGgQEpIhqZpSz&ust=1743665521921000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJjapbzquIwDFQAAAAAdAAAAABAE");
+  padding-bottom: 25px;
+}
+
+h1 {
+  color: #ffffff;
+  border-style: dashed;
+  font-family: 'Gidole';
+}
+
+h2 {
+  color: #ffffff;
+  font-family: 'Gidole';
+}
+
+h3 {
+  color: #ffffff;
+  font-family: 'Gidole';
+}
+
+h4 {
+  color: #ffffff;
+  font-family: 'Gidole';
+}
+  
+p {
+  color: #ffffff;
+  background-color: #d52f13;;
+  border-style: dashed;
+  padding: 20px 5px 20px 5px;
+  font-family: 'Gidole';
+} 
+
+a {
+  color: #ffffff;
+  font-family: 'Gidole';
+}
+
 ```
 
 ## Analysing some key features of these songs
 
 For this project, I decided to listen to four radio stations (Flava, Channel X, ZM, The Hits) and note each song that played on a station. I switched between each of the stations in the aforementioned order about every six minutes and noted each song that was playing at the time. A while after that, I then put in each of the 40 songs I noted through a Google form, noting their title, artist/s, release date, genre, radio station, peak chart position, and no of streams on Spotify.
 
-As part of analysing the data that I collected, I decided to find out which song had the most streams on Spotify, the songs with the shortest title, the oldest song in my playlist, looking at how popular each of the genres are, and looking at each song's Spotify streams, grouped by radio station it was heard on. 
+As part of analysing the data that I collected, I decided to find out which song had the most streams on Spotify, the songs with the shortest title, the oldest song in my playlist, looking at how popular each of the genres are, and looking at the Spotify streams for each song, grouped by radio station it was heard on.
 
 ```{r}
 
+#analysing what the most streamed song in my playlist is
 latest_data$spotify_streams[1 : 40]
-max(latest_data$spotify_streams)
+paste("The most streamed song in my playlist has been streamed",
+      max(latest_data$spotify_streams), "times")
 
+#analysing what songs in my playlist have the shortest title
+#three songs have the shortest title!
 shortest_song_title = latest_data$song_title %>% nchar() %>% min()
-shortest_song <- nchar(latest_data$song_title) == shortest_song_title
-
+shortest_song = nchar(latest_data$song_title) == shortest_song_title
 latest_data$song_title[shortest_song]
+paste("The song with the shortest title is",
+      latest_data$song_title[shortest_song])
+
+#analysing what the oldest song in my playlist is
+#using the dmy function from lubridate package to convert dates into yyyy-mm-dd format
 latest_data$release_date[1 : 40]
 new_release_date = dmy(latest_data$release_date)
 min(new_release_date)
+paste("The oldest song in my playlist was released on",
+      min(new_release_date))
 
+#creating a bar plot to analyse genre in my playlist
 ggplot(data = latest_data) +
   geom_bar(aes(y = genre),
            fill = "#a7d3a5") +
   labs(title = "Popularity of Genre",
+       subtitle = "By number of songs with that genre",
        x = "no of songs",
        y = "genre")
 
+#creating a bar plot to analyse all the songs in my playlist by how many times they have been streamed
+#the bars are coloured according to what station they played on
 latest_data %>%
   ggplot() +
-    geom_bar(aes(x = spotify_streams, fill = radio_station))
+    geom_bar(aes(x = song_title, y = spotify_streams, fill = radio_station),
+             stat = 'identity') +
     labs(title = "Number of Streams by Radio Station",
+         subtitle = "Songs are listed by alphabetical order",
          caption = "Source: Spotify",
          x = "song",
-         y = "no of streams")
+         y = "no of streams") +
+    guides(fill=guide_legend(title="Radio Station")) +
+    theme(axis.text.x = element_blank())
 
 ```
-
-The best pet to have is a `r best_pet` of course!
-
-![](https://c.tenor.com/-qBsG1HwR4oAAAAC/tenor.gif)
