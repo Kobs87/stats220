@@ -1,3 +1,56 @@
+```{css}
+
+@import url('https://fonts.googleapis.com/css2?family=Gidole&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk&display=swap');
+
+body {
+  color: #000000;
+  background-image:         url("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.istockphoto.com%2Fillustrations%2Fcharts-background&psig=AOvVaw1sV6-nd2MkGgQEpIhqZpSz&ust=1743665521921000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJjapbzquIwDFQAAAAAdAAAAABAE");
+  padding-bottom: 25px;
+}
+
+h1 {
+  color: #000000;
+  border-style: dashed;
+  font-family: 'Gidole';
+}
+
+h2 {
+  color: #000000;
+  font-family: 'Gidole';
+}
+
+h3 {
+  color: #000000;
+  font-family: 'Gidole';
+}
+
+h4 {
+  color: #000000;
+  font-family: 'Gidole';
+}
+  
+p {
+  color: #000000;
+  background-color: #d52f13;;
+  border-style: dashed;
+  padding: 20px 5px 20px 5px;
+  font-family: 'Gidole';
+} 
+
+a {
+  color: #000000;
+  font-family: 'Gidole';
+}
+
+```
+
+## Analysing some key features of these songs
+
+For this project, I decided to listen to four radio stations (Flava, Channel X, ZM, The Hits) and note each song that played on a station. I switched between each of the stations in the aforementioned order about every six minutes and noted each song that was playing at the time. A while after that, I then put in each of the 40 songs I noted through a Google form, noting their title, artist/s, release date, genre, radio station, peak chart position, and no of streams on Spotify.
+
+As part of analysing the data that I collected, I decided to find out which song had the most streams on Spotify, the songs with the shortest title, the oldest song in my playlist, looking at how popular each of the genres are, and looking at the Spotify streams for each song, grouped by radio station it was heard on.
+
 ```{r}
 
 #loading those three special packages
@@ -34,7 +87,6 @@ paste("The most streamed song in my playlist has been streamed",
 #three songs have the shortest title!
 shortest_song_title = latest_data$song_title %>% nchar() %>% min()
 shortest_song = nchar(latest_data$song_title) == shortest_song_title
-latest_data$song_title[shortest_song]
 paste("The song with the shortest title is",
       latest_data$song_title[shortest_song])
 
@@ -42,7 +94,6 @@ paste("The song with the shortest title is",
 #using the dmy function from lubridate package to convert dates into yyyy-mm-dd format
 latest_data$release_date[1 : 40]
 new_release_date = dmy(latest_data$release_date)
-min(new_release_date)
 paste("The oldest song in my playlist was released on",
       min(new_release_date))
 
